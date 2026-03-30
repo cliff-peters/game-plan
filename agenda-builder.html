@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Plan – The DOR Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0c0f14;--surf:#181d28;--surf2:#1e2430;--bdr:#333a48;
+  --txt:#f0f2f5;--muted:#9ca3b4;--blue:#5a9de6;
+  --blue-glow:rgba(90,157,230,.14);--green:#5cb85c;--red:#d9534f;
+}
+body{font-family:"Mulish",sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;padding:40px 16px 80px;}
+.wrap{max-width:720px;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:800;line-height:1.2;margin-bottom:28px;}
+.tab-row{display:flex;gap:0;margin-bottom:24px;border:1.5px solid var(--bdr);border-radius:8px;overflow:hidden;}
+.tab-btn{flex:1;background:var(--surf);border:none;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:14px 8px;cursor:pointer;transition:all .15s;}
+.tab-btn:not(:last-child){border-right:1.5px solid var(--bdr);}
+.tab-btn.active{background:var(--blue);color:#fff;}
+.tab-btn:hover:not(.active){color:var(--txt);}
+.panel{display:none;}.panel.active{display:block;}
+.card{background:var(--surf);border:1px solid var(--bdr);border-radius:10px;padding:22px;margin-bottom:16px;}
+.card-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+input[type="text"],input[type="date"],textarea{background:var(--surf2);border:1px solid var(--bdr);border-radius:6px;color:var(--txt);font-family:"Mulish",sans-serif;font-size:.95rem;padding:11px 13px;transition:border .15s;}
+input[type="text"]:focus,input[type="date"]:focus,textarea:focus{outline:none;border-color:var(--blue);}
+input[type="date"]{color-scheme:dark;}
+textarea{resize:vertical;min-height:60px;}
+.topic-block{margin-bottom:10px;border:1px solid var(--bdr);border-radius:8px;overflow:hidden;transition:border-color .15s;}
+.topic-block.active{border-color:var(--blue);}
+.topic-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;transition:background .13s;}
+.topic-header:hover{background:var(--surf2);}
+.topic-header input[type="checkbox"]{accent-color:var(--blue);width:18px;height:18px;cursor:pointer;flex-shrink:0;}
+.topic-header span{font-size:.92rem;font-weight:700;}
+.topic-bullets{display:none;padding:0 14px 14px 42px;}
+.topic-block.active .topic-bullets{display:block;}
+.bullet-row{display:flex;gap:8px;margin-bottom:8px;align-items:center;}
+.bullet-dot{color:var(--blue);font-size:1rem;flex-shrink:0;}
+.bullet-row input{flex:1;background:var(--surf2);border:1px solid var(--bdr);border-radius:5px;color:var(--txt);font-family:"Mulish",sans-serif;font-size:.88rem;padding:8px 10px;outline:none;transition:border-color .13s;}
+.bullet-row input:focus{border-color:var(--blue);}
+.bullet-rm{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:4px;transition:color .13s;}
+.bullet-rm:hover{color:var(--red);}
+.add-bullet{background:transparent;border:none;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.06em;cursor:pointer;padding:2px 0;transition:color .13s;}
+.add-bullet:hover{color:var(--blue);}
+.custom-add-row{display:flex;gap:10px;margin-top:8px;}
+.custom-add-row input{flex:1;}
+.custom-add-btn{background:var(--blue);border:none;color:#fff;font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:700;padding:10px 16px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:opacity .13s;}
+.custom-add-btn:hover{opacity:.85;}
+.btn-generate{width:100%;background:var(--blue);border:none;color:#fff;font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:15px;border-radius:8px;cursor:pointer;transition:opacity .15s;margin-bottom:20px;}
+.btn-generate:hover{opacity:.88;}
+.output-card{background:var(--surf);border:1.5px solid var(--bdr);border-radius:10px;padding:24px;display:none;}
+.output-card.visible{display:block;}
+.output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.output-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);}
+.tag{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:rgba(92,184,92,.1);padding:4px 10px;border-radius:4px;}
+.output-body{font-size:.95rem;line-height:1.8;white-space:pre-wrap;background:var(--surf2);border:1px solid var(--bdr);border-radius:8px;padding:18px;margin-bottom:16px;}
+.copy-row{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-copy{background:transparent;border:1.5px solid var(--blue);color:var(--blue);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;transition:all .13s;}
+.btn-copy:hover,.btn-copy.copied{background:var(--blue);color:#fff;}
+.btn-print{background:transparent;border:1.5px solid var(--muted);color:var(--muted);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;transition:all .13s;}
+.btn-print:hover{border-color:var(--txt);color:var(--txt);}
+@media print{
+  body{background:#fff;color:#000;padding:20px;}.wrap{max-width:100%;}
+  .tab-row,.card,.btn-generate,.copy-row,.output-header,.tag,[style*="DOR Suite"],[style*="gradient"]{display:none!important;}
+  .panel{display:none!important;}
+  .output-card{display:block!important;background:#fff;border:none;padding:0;}
+  .output-body{background:#fff;border:none;color:#000;padding:0;font-size:12pt;line-height:1.6;}
+  h1{display:none!important;}.print-header{display:block!important;font-size:14pt;font-weight:700;margin-bottom:16px;color:#000;}
+  .footer-bar{display:none!important;}
+}
+.print-header{display:none;}
+@media screen and (max-width:560px){.fields{grid-template-columns:1fr;}.tab-row{flex-wrap:wrap;}.tab-btn{font-size:.7rem;padding:11px 6px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">The DOR Suite</div>
+<h1 style="display:flex;align-items:center;gap:14px;">
+  <span style="width:44px;height:44px;background:linear-gradient(135deg,#4a90d9,#3ecf7a);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:var(--bg);letter-spacing:.02em;flex-shrink:0;">CP</span>
+  <span>Game <span style="color:var(--blue);">Plan</span></span>
+</h1>
+<div class="tab-row">
+  <button class="tab-btn active" id="tab-team" onclick="switchTab('team')">Team Meeting</button>
+  <button class="tab-btn" id="tab-oneone" onclick="switchTab('oneone')">One-on-One</button>
+</div>
+
+<div class="panel active" id="panel-team">
+  <div class="card">
+    <div class="card-title">Meeting Type</div>
+    <div style="display:flex;gap:0;border:1.5px solid var(--bdr);border-radius:8px;overflow:hidden;">
+      <button class="toggle-btn active" id="tog-weekly" onclick="setMeetingType('weekly')" style="flex:1;background:var(--blue);border:none;color:#fff;font-family:'Mulish',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;padding:12px 8px;cursor:pointer;transition:all .15s;">Weekly</button>
+      <button class="toggle-btn" id="tog-monthly" onclick="setMeetingType('monthly')" style="flex:1;background:var(--surf2);border:none;border-left:1.5px solid var(--bdr);color:var(--muted);font-family:'Mulish',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;padding:12px 8px;cursor:pointer;transition:all .15s;">Monthly</button>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Meeting Details</div><div class="fields"><div class="field"><label>Date</label><input type="date" id="t-date"></div><div class="field"><label>Time</label><input type="text" id="t-time" placeholder="e.g. 9:00 AM"></div></div></div>
+  <div class="card"><div class="card-title">Topics</div><div id="t-topics"></div><div class="custom-add-row"><input type="text" id="t-new-topic" placeholder="Add a custom topic"><button class="custom-add-btn" onclick="addCustomTopic('t')">Add</button></div></div>
+  <button class="btn-generate" onclick="generateAgenda('t')">Generate Plan</button>
+  <div class="output-card" id="t-output"><div class="print-header" id="t-print-header"></div><div class="output-header"><span class="output-title" id="t-output-title">Team Meeting</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="t-body"></div><div class="copy-row"><button class="btn-copy" onclick="copyText('t-body',this)">Copy Plan</button><button class="btn-print" onclick="printAgenda('t')">Print</button></div></div>
+</div>
+
+<div class="panel" id="panel-oneone">
+  <div class="card"><div class="card-title">Meeting Details</div><div class="fields"><div class="field"><label>Employee Name</label><input type="text" id="o-name" placeholder="e.g. Sarah"></div><div class="field"><label>Date</label><input type="date" id="o-date"></div></div></div>
+  <div class="card"><div class="card-title">Topics</div><div id="o-topics"></div><div class="custom-add-row"><input type="text" id="o-new-topic" placeholder="Add a custom topic"><button class="custom-add-btn" onclick="addCustomTopic('o')">Add</button></div></div>
+  <button class="btn-generate" onclick="generateAgenda('o')">Generate Plan</button>
+  <div class="output-card" id="o-output"><div class="print-header" id="o-print-header"></div><div class="output-header"><span class="output-title">One-on-One</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="o-body"></div><div class="copy-row"><button class="btn-copy" onclick="copyText('o-body',this)">Copy Plan</button><button class="btn-print" onclick="printAgenda('o')">Print</button></div></div>
+</div>
+
+<div class="footer-bar" style="text-align:center;padding:40px 0 0;margin-top:40px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;gap:10px;">
+  <span style="width:28px;height:28px;background:linear-gradient(135deg,#4a90d9,#3ecf7a);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#0c0f14;letter-spacing:.02em;">CP</span>
+  <span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;color:var(--muted);">Designed by Cliff Peters</span>
+</div>
+</div>
+
+<script>
+var topicSets = {
+  t:['Caseload Updates','Productivity Check-In','Schedule Changes','New Admissions','Discharges','Fall Follow-Ups','Equipment Needs','General Reminders','Department Goals and Progress','Billing and Compliance Review','Staffing Updates','Policy or Process Changes','Upcoming Events or Deadlines','8-Minute Rule Review','Documentation Standards','Billing Errors and Corrections','Recognition and Shout-Outs'],
+  o:['Performance Check-In','Caseload Review','Goals and Development','Feedback (Both Directions)','Concerns or Issues','8-Minute Rule Review','Documentation Standards','Billing Errors and Corrections']
+};
+var meetingType = 'weekly';
+var meetingTypeNames = {weekly:'Weekly Team Meeting', monthly:'Monthly Department Meeting'};
+
+function setMeetingType(type) {
+  meetingType = type;
+  document.getElementById('tog-weekly').style.background = (type === 'weekly') ? 'var(--blue)' : 'var(--surf2)';
+  document.getElementById('tog-weekly').style.color = (type === 'weekly') ? '#fff' : 'var(--muted)';
+  document.getElementById('tog-monthly').style.background = (type === 'monthly') ? 'var(--blue)' : 'var(--surf2)';
+  document.getElementById('tog-monthly').style.color = (type === 'monthly') ? '#fff' : 'var(--muted)';
+}
+
+var topicId = 0;
+
+function initTopics(prefix) {
+  var container = document.getElementById(prefix + '-topics');
+  topicSets[prefix].forEach(function(name) { addTopicBlock(container, prefix, name); });
+}
+
+function addTopicBlock(container, prefix, name) {
+  topicId++;
+  var id = 'topic-' + topicId;
+  var block = document.createElement('div');
+  block.className = 'topic-block';
+  block.id = id;
+  block.innerHTML =
+    '<div class="topic-header">' +
+      '<input type="checkbox" onclick="toggleTopic(\'' + id + '\', event)">' +
+      '<span onclick="toggleTopic(\'' + id + '\', event)">' + name + '</span>' +
+    '</div>' +
+    '<div class="topic-bullets">' +
+      '<div class="bullet-row"><span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a point"><button class="bullet-rm" onclick="removeBullet(this,\'' + id + '\')">\u00d7</button></div>' +
+      '<button class="add-bullet" onclick="addBullet(\'' + id + '\')">+ Add Point</button>' +
+    '</div>';
+  container.appendChild(block);
+}
+
+function toggleTopic(id, e) {
+  var block = document.getElementById(id);
+  var cb = block.querySelector('input[type="checkbox"]');
+  if (e.target.tagName === 'SPAN') cb.checked = !cb.checked;
+  block.classList.toggle('active', cb.checked);
+}
+
+function addBullet(blockId) {
+  var bullets = document.getElementById(blockId).querySelector('.topic-bullets');
+  var addBtn = bullets.querySelector('.add-bullet');
+  var row = document.createElement('div');
+  row.className = 'bullet-row';
+  row.innerHTML = '<span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a point"><button class="bullet-rm" onclick="removeBullet(this,\'' + blockId + '\')">\u00d7</button>';
+  bullets.insertBefore(row, addBtn);
+}
+
+function removeBullet(btn, blockId) {
+  var rows = document.getElementById(blockId).querySelectorAll('.bullet-row');
+  if (rows.length > 1) btn.parentElement.remove();
+  else btn.parentElement.querySelector('input').value = '';
+}
+
+function addCustomTopic(prefix) {
+  var input = document.getElementById(prefix + '-new-topic');
+  var name = input.value.trim();
+  if (!name) return;
+  var container = document.getElementById(prefix + '-topics');
+  addTopicBlock(container, prefix, name);
+  var blocks = container.querySelectorAll('.topic-block');
+  var last = blocks[blocks.length - 1];
+  last.querySelector('input[type="checkbox"]').checked = true;
+  last.classList.add('active');
+  input.value = '';
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '[date]';
+  var parts = dateStr.split('-');
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return months[parseInt(parts[1],10) - 1] + ' ' + parseInt(parts[2],10) + ', ' + parts[0];
+}
+
+function generateAgenda(prefix) {
+  var container = document.getElementById(prefix + '-topics');
+  var blocks = container.querySelectorAll('.topic-block');
+  var sections = [];
+  blocks.forEach(function(block) {
+    var cb = block.querySelector('input[type="checkbox"]');
+    if (!cb.checked) return;
+    var name = block.querySelector('.topic-header span').textContent;
+    var bullets = [];
+    block.querySelectorAll('.bullet-row input').forEach(function(inp) {
+      var v = inp.value.trim();
+      if (v) bullets.push(v);
+    });
+    sections.push({name: name, bullets: bullets});
+  });
+  if (sections.length === 0) { alert('Please select at least one topic.'); return; }
+
+  var date = formatDate(document.getElementById(prefix + '-date').value);
+  var timeEl = document.getElementById(prefix + '-time');
+  var time = timeEl ? timeEl.value.trim() : '';
+  var empName = (prefix === 'o') ? document.getElementById('o-name').value.trim() : '';
+  if (prefix === 'o' && !empName) { alert('Please enter the employee name.'); return; }
+
+  var title = (prefix === 't') ? meetingTypeNames[meetingType] : 'One-on-One';
+
+  var agenda = title.toUpperCase() + '\n';
+  agenda += 'Date: ' + date;
+  if (time) agenda += '  |  Time: ' + time;
+  if (empName) agenda += '  |  Employee: ' + empName;
+  agenda += '\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n';
+
+  for (var i = 0; i < sections.length; i++) {
+    agenda += (i + 1) + '. ' + sections[i].name + '\n';
+    for (var j = 0; j < sections[i].bullets.length; j++) {
+      agenda += '   \u2022 ' + sections[i].bullets[j] + '\n';
+    }
+    agenda += '\n';
+  }
+  agenda += '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500';
+
+  if (prefix === 'o') {
+    agenda += '\n\n\n___________________________\nEmployee Signature / Date\n\n___________________________\nSupervisor Signature / Date';
+  }
+
+  document.getElementById(prefix + '-body').textContent = agenda;
+  if (prefix === 't') document.getElementById('t-output-title').textContent = title;
+  var printHeader = title + ' \u2014 ' + date;
+  if (empName) printHeader += ' \u2014 ' + empName;
+  document.getElementById(prefix + '-print-header').textContent = printHeader;
+  var card = document.getElementById(prefix + '-output');
+  card.classList.add('visible');
+  setTimeout(function() { card.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
+}
+
+function copyText(id, btn) {
+  var text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = '\u2713 Copied';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 2200);
+  });
+}
+
+function printAgenda(prefix) {
+  document.querySelectorAll('.output-card').forEach(function(c) { c.style.display = 'none'; });
+  document.getElementById(prefix + '-output').style.display = 'block';
+  window.print();
+  document.querySelectorAll('.output-card').forEach(function(c) { c.style.display = ''; });
+}
+
+var today = new Date().toISOString().split('T')[0];
+['t','o'].forEach(function(p) { initTopics(p); document.getElementById(p + '-date').value = today; });
+</script>
+</body>
+</html>
