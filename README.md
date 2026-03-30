@@ -3,7 +3,7 @@
 
 **Part of The DOR Suite**
 
-A meeting agenda builder for Directors of Rehabilitation in assisted living. Generate structured, outline-format agendas for team meetings and one-on-ones in seconds.
+A meeting agenda builder for the directors of rehabilitation. Generate structured, outline-format agendas for team meetings and one-on-ones in seconds.
 
 ## What It Does
 
