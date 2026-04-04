@@ -1,7 +1,4 @@
-[README-gameplan.md](https://github.com/user-attachments/files/26362750/README-gameplan.md)
 # Game Plan
-
-**Part of The DOR Suite**
 
 A meeting agenda builder for the directors of rehabilitation. Generate structured, outline-format agendas for team meetings and one-on-ones in seconds.
 
