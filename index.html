@@ -11,6 +11,7 @@
   --bg:#0c0f14;--surf:#181d28;--surf2:#1e2430;--bdr:#333a48;
   --txt:#f0f2f5;--muted:#9ca3b4;--blue:#5a9de6;
   --blue-glow:rgba(90,157,230,.14);--green:#5cb85c;--red:#d9534f;
+  --logo-gradient:linear-gradient(135deg,#4a90d9,#3ecf7a);--logo-text:#0c0f14;
 }
 body{font-family:"Mulish",sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;padding:40px 16px 80px;}
 .wrap{max-width:720px;margin:0 auto;}
@@ -63,6 +64,9 @@ textarea{resize:vertical;min-height:60px;}
 .btn-copy:hover,.btn-copy.copied{background:var(--blue);color:#fff;}
 .btn-print{background:transparent;border:1.5px solid var(--muted);color:var(--muted);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;transition:all .13s;}
 .btn-print:hover{border-color:var(--txt);color:var(--txt);}
+.footer{margin-top:48px;padding:24px 16px;display:flex;align-items:center;justify-content:center;gap:8px;border-top:1px solid var(--bdr);}
+.footer-logo{width:18px;height:18px;background:var(--logo-gradient);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;color:var(--logo-text);flex-shrink:0;font-family:"Mulish",sans-serif;}
+.footer-text{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.04em;}
 @media print{
   body{background:#fff;color:#000;padding:20px;}.wrap{max-width:100%;}
   .tab-row,.card,.btn-generate,.copy-row,.output-header,.tag,[style*="DOR Suite"],[style*="gradient"]{display:none!important;}
@@ -70,7 +74,7 @@ textarea{resize:vertical;min-height:60px;}
   .output-card{display:block!important;background:#fff;border:none;padding:0;}
   .output-body{background:#fff;border:none;color:#000;padding:0;font-size:12pt;line-height:1.6;}
   h1{display:none!important;}.print-header{display:block!important;font-size:14pt;font-weight:700;margin-bottom:16px;color:#000;}
-  .footer-bar{display:none!important;}
+  .footer{display:none!important;}
 }
 .print-header{display:none;}
 @media screen and (max-width:560px){.fields{grid-template-columns:1fr;}.tab-row{flex-wrap:wrap;}.tab-btn{font-size:.7rem;padding:11px 6px;}}
@@ -109,9 +113,9 @@ textarea{resize:vertical;min-height:60px;}
   <div class="output-card" id="o-output"><div class="print-header" id="o-print-header"></div><div class="output-header"><span class="output-title">One-on-One</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="o-body"></div><div class="copy-row"><button class="btn-copy" onclick="copyText('o-body',this)">Copy Plan</button><button class="btn-print" onclick="printAgenda('o')">Print</button></div></div>
 </div>
 
-<div class="footer-bar" style="text-align:center;padding:40px 0 0;margin-top:40px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;gap:10px;">
-  <span style="width:28px;height:28px;background:linear-gradient(135deg,#4a90d9,#3ecf7a);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#0c0f14;letter-spacing:.02em;">CP</span>
-  <span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;color:var(--muted);">Built by Cliff Peters</span>
+<div class="footer">
+  <div class="footer-logo">CP</div>
+  <span class="footer-text">Built by Cliff Peters</span>
 </div>
 </div>
 
