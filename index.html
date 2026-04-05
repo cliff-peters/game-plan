@@ -87,29 +87,29 @@ textarea{resize:vertical;min-height:60px;}
   <span>Game <span style="color:var(--blue);">Plan</span></span>
 </h1>
 <div class="tab-row">
-  <button class="tab-btn active" id="tab-team" onclick="switchTab('team')">Team Meeting</button>
-  <button class="tab-btn" id="tab-oneone" onclick="switchTab('oneone')">One-on-One</button>
+  <button type="button" class="tab-btn active" id="tab-team" onclick="switchTab('team')" aria-label="Agenda: team meeting">Team Meeting</button>
+  <button type="button" class="tab-btn" id="tab-oneone" onclick="switchTab('oneone')" aria-label="Agenda: one-on-one meeting">One-on-One</button>
 </div>
 
 <div class="panel active" id="panel-team">
   <div class="card">
     <div class="card-title">Meeting Type</div>
     <div style="display:flex;gap:0;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;">
-      <button class="toggle-btn active" id="tog-weekly" onclick="setMeetingType('weekly')" style="flex:1;background:var(--blue);border:none;color:#fff;font-family:'Mulish',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;padding:12px 8px;cursor:pointer;transition:all .15s;">Weekly</button>
-      <button class="toggle-btn" id="tog-monthly" onclick="setMeetingType('monthly')" style="flex:1;background:var(--surface2);border:none;border-left:1.5px solid var(--border);color:var(--muted);font-family:'Mulish',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;padding:12px 8px;cursor:pointer;transition:all .15s;">Monthly</button>
+      <button type="button" class="toggle-btn active" id="tog-weekly" onclick="setMeetingType('weekly')" aria-label="Meeting cadence: weekly" style="flex:1;background:var(--blue);border:none;color:#fff;font-family:'Mulish',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;padding:12px 8px;cursor:pointer;transition:all .15s;">Weekly</button>
+      <button type="button" class="toggle-btn" id="tog-monthly" onclick="setMeetingType('monthly')" aria-label="Meeting cadence: monthly" style="flex:1;background:var(--surface2);border:none;border-left:1.5px solid var(--border);color:var(--muted);font-family:'Mulish',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;padding:12px 8px;cursor:pointer;transition:all .15s;">Monthly</button>
     </div>
   </div>
   <div class="card"><div class="card-title">Meeting Details</div><div class="fields"><div class="field"><label>Date</label><input type="date" id="t-date"></div><div class="field"><label>Time</label><input type="text" id="t-time" placeholder="e.g. 9:00 AM"></div></div></div>
-  <div class="card"><div class="card-title">Topics</div><div id="t-topics"></div><div class="custom-add-row"><input type="text" id="t-new-topic" placeholder="Add a custom topic"><button class="custom-add-btn" onclick="addCustomTopic('t')">Add</button></div></div>
-  <button class="btn-generate" onclick="generateAgenda('t')">Generate Plan</button>
-  <div class="output-card" id="t-output"><div class="print-header" id="t-print-header"></div><div class="output-header"><span class="output-title" id="t-output-title">Team Meeting</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="t-body"></div><div class="copy-row"><button class="btn-copy" onclick="copyText('t-body',this)">Copy Plan</button><button class="btn-print" onclick="printAgenda('t')">Print</button></div></div>
+  <div class="card"><div class="card-title">Topics</div><div id="t-topics"></div><div class="custom-add-row"><input type="text" id="t-new-topic" placeholder="Add a custom topic"><button type="button" class="custom-add-btn" onclick="addCustomTopic('t')" aria-label="Add custom team meeting topic">Add</button></div></div>
+  <button type="button" class="btn-generate" onclick="generateAgenda('t')" aria-label="Generate team meeting agenda">Generate Plan</button>
+  <div class="output-card" id="t-output"><div class="print-header" id="t-print-header"></div><div class="output-header"><span class="output-title" id="t-output-title">Team Meeting</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="t-body"></div><div class="copy-row"><button type="button" class="btn-copy" onclick="copyText('t-body',this)" aria-label="Copy agenda to clipboard">Copy Plan</button><button type="button" class="btn-print" onclick="printAgenda('t')" aria-label="Print agenda">Print</button></div></div>
 </div>
 
 <div class="panel" id="panel-oneone">
   <div class="card"><div class="card-title">Meeting Details</div><div class="fields"><div class="field"><label>Employee Name</label><input type="text" id="o-name" placeholder="e.g. Sarah"></div><div class="field"><label>Date</label><input type="date" id="o-date"></div></div></div>
-  <div class="card"><div class="card-title">Topics</div><div id="o-topics"></div><div class="custom-add-row"><input type="text" id="o-new-topic" placeholder="Add a custom topic"><button class="custom-add-btn" onclick="addCustomTopic('o')">Add</button></div></div>
-  <button class="btn-generate" onclick="generateAgenda('o')">Generate Plan</button>
-  <div class="output-card" id="o-output"><div class="print-header" id="o-print-header"></div><div class="output-header"><span class="output-title">One-on-One</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="o-body"></div><div class="copy-row"><button class="btn-copy" onclick="copyText('o-body',this)">Copy Plan</button><button class="btn-print" onclick="printAgenda('o')">Print</button></div></div>
+  <div class="card"><div class="card-title">Topics</div><div id="o-topics"></div><div class="custom-add-row"><input type="text" id="o-new-topic" placeholder="Add a custom topic"><button type="button" class="custom-add-btn" onclick="addCustomTopic('o')" aria-label="Add custom one-on-one topic">Add</button></div></div>
+  <button type="button" class="btn-generate" onclick="generateAgenda('o')" aria-label="Generate one-on-one agenda">Generate Plan</button>
+  <div class="output-card" id="o-output"><div class="print-header" id="o-print-header"></div><div class="output-header"><span class="output-title">One-on-One</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="o-body"></div><div class="copy-row"><button type="button" class="btn-copy" onclick="copyText('o-body',this)" aria-label="Copy agenda to clipboard">Copy Plan</button><button type="button" class="btn-print" onclick="printAgenda('o')" aria-label="Print agenda">Print</button></div></div>
 </div>
 
 <div class="footer">
@@ -153,8 +153,8 @@ function addTopicBlock(container, prefix, name) {
       '<span onclick="toggleTopic(\'' + id + '\', event)">' + name + '</span>' +
     '</div>' +
     '<div class="topic-bullets">' +
-      '<div class="bullet-row"><span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a point"><button class="bullet-rm" onclick="removeBullet(this,\'' + id + '\')">\u00d7</button></div>' +
-      '<button class="add-bullet" onclick="addBullet(\'' + id + '\')">+ Add Point</button>' +
+      '<div class="bullet-row"><span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a point"><button type="button" class="bullet-rm" onclick="removeBullet(this,\'' + id + '\')" aria-label="Remove bullet point">\u00d7</button></div>' +
+      '<button type="button" class="add-bullet" onclick="addBullet(\'' + id + '\')" aria-label="Add bullet point">+ Add Point</button>' +
     '</div>';
   container.appendChild(block);
 }
@@ -171,7 +171,7 @@ function addBullet(blockId) {
   var addBtn = bullets.querySelector('.add-bullet');
   var row = document.createElement('div');
   row.className = 'bullet-row';
-  row.innerHTML = '<span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a point"><button class="bullet-rm" onclick="removeBullet(this,\'' + blockId + '\')">\u00d7</button>';
+  row.innerHTML = '<span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a point"><button type="button" class="bullet-rm" onclick="removeBullet(this,\'' + blockId + '\')" aria-label="Remove bullet point">\u00d7</button>';
   bullets.insertBefore(row, addBtn);
 }
 
