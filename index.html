@@ -295,7 +295,14 @@ function printAgenda(prefix) {
   document.querySelectorAll('.output-card').forEach(function(c) { c.style.display = ''; });
 }
 
-var today = new Date().toISOString().split('T')[0];
+function localDateInputValue(d) {
+  d = d || new Date();
+  var y = d.getFullYear();
+  var m = d.getMonth() + 1;
+  var day = d.getDate();
+  return y + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
+}
+var today = localDateInputValue();
 ['t','o'].forEach(function(p) { initTopics(p); document.getElementById(p + '-date').value = today; });
 </script>
 </body>
