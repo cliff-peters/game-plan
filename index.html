@@ -9,7 +9,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#0c0f14;--surface:#181d28;--surface2:#1e2430;--border:#333a48;
-  --text:#f0f2f5;--muted:#9ca3b4;--blue:#5a9de6;--green:#3ecf7a;--amber:#f0a830;--red:#ef4444;--teal:#2dd4bf;
+  --text:#f0f2f5;--muted:#9ca3b4;--blue:#f0a830;--green:#3ecf7a;--amber:#f0a830;--red:#ef4444;--teal:#2dd4bf;
   --logo-gradient:linear-gradient(135deg,#4a90d9,#3ecf7a);--logo-text:#0c0f14;
 }
 body{font-family:"Mulish",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 16px 80px;}
@@ -20,8 +20,9 @@ h1{font-size:1.9rem;font-weight:800;line-height:1.2;margin-bottom:28px;}
 .tab-btn:not(:last-child){border-right:1.5px solid var(--border);}
 .tab-btn.active{background:var(--blue);color:#fff;}
 .tab-btn:hover:not(.active){color:var(--text);}
-.panel{display:none;}.panel.active{display:block;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;}
+.panel{display:none;}.panel.active{display:block;animation:fadeUp .2s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.card{background:var(--surface);border:1px solid var(--border);border-top:3px solid #f0a830;border-radius:10px;padding:22px;margin-bottom:16px;}
 .card-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .field{display:flex;flex-direction:column;gap:5px;}
@@ -53,7 +54,7 @@ textarea{resize:vertical;min-height:60px;}
 .btn-generate{width:100%;background:var(--blue);border:none;color:#fff;font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:15px;border-radius:8px;cursor:pointer;transition:opacity .15s;margin-bottom:20px;}
 .btn-generate:hover{opacity:.88;}
 .output-card{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:24px;display:none;}
-.output-card.visible{display:block;}
+.output-card.visible{display:block;border-left:3px solid #f0a830;border-color:rgba(240,168,48,0.3);box-shadow:0 4px 24px rgba(240,168,48,0.07);}
 .output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
 .output-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);}
 .tag{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:rgba(62,207,122,.1);padding:4px 10px;border-radius:4px;}
@@ -80,11 +81,11 @@ textarea{resize:vertical;min-height:60px;}
 </style>
 </head>
 <body>
+<div style="position:fixed;top:0;left:0;right:0;height:3px;background:#f0a830;z-index:9999;"></div>
 <div class="wrap">
-<div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">The DOR Suite</div>
 <h1 style="display:flex;align-items:center;gap:14px;">
   <span style="width:44px;height:44px;background:var(--logo-gradient);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:var(--logo-text);letter-spacing:.02em;flex-shrink:0;">CP</span>
-  <span>Game <span style="color:var(--blue);">Plan</span></span>
+  <span>Game <span style="color:#f0a830;">Plan</span></span>
 </h1>
 <div class="tab-row">
   <button type="button" class="tab-btn active" id="tab-team" onclick="switchTab('team')" aria-label="Agenda: team meeting">Team Meeting</button>
