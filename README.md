@@ -2,7 +2,7 @@
 
 Meeting agenda builder for Directors of Rehabilitation. Generate structured agendas for team meetings and one-on-ones in seconds.
 
-Live: https://cliff-peters.github.io/game-plan
+Live: [https://cliff-peters.github.io/game-plan](https://cliff-peters.github.io/game-plan)
 
 ## Tabs
 
@@ -21,4 +21,4 @@ Live: https://cliff-peters.github.io/game-plan
 
 ## Part of The DOR Suite
 
-https://cliff-peters.github.io
+[https://cliff-peters.github.io](https://cliff-peters.github.io)
