@@ -322,6 +322,7 @@ function loadPlan(prefix) {
 }
 
 function clearPlan(prefix) {
+  if (!confirm('Start a new plan? Your current plan and any notes will be cleared.')) return;
   try { localStorage.removeItem(STORE[prefix]); } catch(e) {}
   document.getElementById(prefix + '-output').classList.remove('visible');
   document.getElementById(prefix + '-banner').classList.remove('visible');
