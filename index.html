@@ -31,19 +31,19 @@ input[type="text"],input[type="date"],textarea{background:var(--surface2);border
 input[type="text"]:focus,input[type="date"]:focus,textarea:focus{outline:none;border-color:var(--blue);}
 input[type="date"]{color-scheme:dark;}
 textarea{resize:vertical;min-height:60px;}
-.topic-block{margin-bottom:10px;border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .15s;}
-.topic-block.active{border-color:var(--blue);}
-.topic-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;transition:background .13s;}
-.topic-header:hover{background:var(--surface2);}
-.topic-header input[type="checkbox"]{accent-color:var(--blue);width:18px;height:18px;cursor:pointer;flex-shrink:0;}
-.topic-header span{font-size:.92rem;font-weight:700;}
-.topic-bullets{display:none;padding:0 14px 14px 42px;}
-.topic-block.active .topic-bullets{display:block;}
-.bullet-row{display:flex;gap:8px;margin-bottom:8px;align-items:center;}
+.chip-group{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.chip{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;}
+.chip:hover{border-color:var(--blue);color:var(--blue);}
+.chip.selected{background:rgba(240,168,48,0.1);border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 3px rgba(240,168,48,0.12);}
+.topic-details{margin-top:4px;}
+.topic-detail-block{display:none;border-left:2px solid var(--blue);margin-bottom:10px;padding:10px 0 4px 14px;}
+.topic-detail-block.visible{display:block;}
+.topic-detail-name{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
+.bullet-row{display:flex;gap:8px;margin-bottom:7px;align-items:center;}
 .bullet-dot{color:var(--blue);font-size:1rem;flex-shrink:0;}
 .bullet-row input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:"Mulish",sans-serif;font-size:.88rem;padding:8px 10px;outline:none;transition:border-color .13s;}
 .bullet-row input:focus{border-color:var(--blue);}
-.bullet-rm{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:4px;transition:color .13s;}
+.bullet-rm{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:4px;line-height:1;transition:color .13s;}
 .bullet-rm:hover{color:var(--red);}
 .add-bullet{background:transparent;border:none;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.06em;cursor:pointer;padding:2px 0;transition:color .13s;}
 .add-bullet:hover{color:var(--blue);}
@@ -101,14 +101,14 @@ textarea{resize:vertical;min-height:60px;}
     </div>
   </div>
   <div class="card"><div class="card-title">Meeting Details</div><div class="fields"><div class="field"><label>Date</label><input type="date" id="t-date"></div><div class="field"><label>Time</label><input type="text" id="t-time" placeholder="e.g. 9:00 AM"></div></div></div>
-  <div class="card"><div class="card-title">Topics</div><div id="t-topics"></div><div class="custom-add-row"><input type="text" id="t-new-topic" placeholder="Add a custom topic"><button type="button" class="custom-add-btn" onclick="addCustomTopic('t')" aria-label="Add custom team meeting topic">Add</button></div></div>
+  <div class="card"><div class="card-title">Topics</div><div class="chip-group" id="t-topics"></div><div class="topic-details" id="t-details"></div><div class="custom-add-row"><input type="text" id="t-new-topic" placeholder="Add a custom topic"><button type="button" class="custom-add-btn" onclick="addCustomTopic('t')" aria-label="Add custom team meeting topic">Add</button></div></div>
   <button type="button" class="btn-generate" onclick="generateAgenda('t')" aria-label="Generate team meeting agenda">Generate Plan</button>
   <div class="output-card" id="t-output"><div class="print-header" id="t-print-header"></div><div class="output-header"><span class="output-title" id="t-output-title">Team Meeting</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="t-body"></div><div class="copy-row"><button type="button" class="btn-copy" onclick="copyText('t-body',this)" aria-label="Copy agenda to clipboard">Copy Plan</button><button type="button" class="btn-print" onclick="printAgenda('t')" aria-label="Print agenda">Print</button></div></div>
 </div>
 
 <div class="panel" id="panel-oneone">
   <div class="card"><div class="card-title">Meeting Details</div><div class="fields"><div class="field"><label>Employee Name</label><input type="text" id="o-name" placeholder="e.g. Sarah"></div><div class="field"><label>Date</label><input type="date" id="o-date"></div></div></div>
-  <div class="card"><div class="card-title">Topics</div><div id="o-topics"></div><div class="custom-add-row"><input type="text" id="o-new-topic" placeholder="Add a custom topic"><button type="button" class="custom-add-btn" onclick="addCustomTopic('o')" aria-label="Add custom one-on-one topic">Add</button></div></div>
+  <div class="card"><div class="card-title">Topics</div><div class="chip-group" id="o-topics"></div><div class="topic-details" id="o-details"></div><div class="custom-add-row"><input type="text" id="o-new-topic" placeholder="Add a custom topic"><button type="button" class="custom-add-btn" onclick="addCustomTopic('o')" aria-label="Add custom one-on-one topic">Add</button></div></div>
   <button type="button" class="btn-generate" onclick="generateAgenda('o')" aria-label="Generate one-on-one agenda">Generate Plan</button>
   <div class="output-card" id="o-output"><div class="print-header" id="o-print-header"></div><div class="output-header"><span class="output-title">One-on-One</span><span class="tag">Ready</span></div><div class="output-body" contenteditable="true" style="cursor:text;" id="o-body"></div><div class="copy-row"><button type="button" class="btn-copy" onclick="copyText('o-body',this)" aria-label="Copy agenda to clipboard">Copy Plan</button><button type="button" class="btn-print" onclick="printAgenda('o')" aria-label="Print agenda">Print</button></div></div>
 </div>
@@ -139,41 +139,44 @@ var topicId = 0;
 
 function initTopics(prefix) {
   var container = document.getElementById(prefix + '-topics');
-  topicSets[prefix].forEach(function(name) { addTopicBlock(container, prefix, name); });
+  topicSets[prefix].forEach(function(name) { addTopicChip(prefix, name, false); });
 }
 
-function addTopicBlock(container, prefix, name) {
+function addTopicChip(prefix, name, selected) {
   topicId++;
-  var id = 'topic-' + topicId;
-  var block = document.createElement('div');
-  block.className = 'topic-block';
-  block.id = id;
-  block.innerHTML =
-    '<div class="topic-header">' +
-      '<input type="checkbox" onclick="toggleTopic(\'' + id + '\', event)">' +
-      '<span onclick="toggleTopic(\'' + id + '\', event)">' + name + '</span>' +
-    '</div>' +
-    '<div class="topic-bullets">' +
-      '<div class="bullet-row"><span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a point"><button type="button" class="bullet-rm" onclick="removeBullet(this,\'' + id + '\')" aria-label="Remove bullet point">\u00d7</button></div>' +
-      '<button type="button" class="add-bullet" onclick="addBullet(\'' + id + '\')" aria-label="Add bullet point">+ Add Point</button>' +
-    '</div>';
-  container.appendChild(block);
-}
+  var detailId = 'detail-' + topicId;
 
-function toggleTopic(id, e) {
-  var block = document.getElementById(id);
-  var cb = block.querySelector('input[type="checkbox"]');
-  if (e.target.tagName === 'SPAN') cb.checked = !cb.checked;
-  block.classList.toggle('active', cb.checked);
+  // Chip button
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'chip' + (selected ? ' selected' : '');
+  btn.textContent = name;
+  btn.dataset.detailId = detailId;
+  btn.addEventListener('click', function() {
+    btn.classList.toggle('selected');
+    document.getElementById(detailId).classList.toggle('visible', btn.classList.contains('selected'));
+  });
+  document.getElementById(prefix + '-topics').appendChild(btn);
+
+  // Paired detail block
+  var block = document.createElement('div');
+  block.className = 'topic-detail-block' + (selected ? ' visible' : '');
+  block.id = detailId;
+  block.innerHTML =
+    '<div class="topic-detail-name">' + name + '</div>' +
+    '<div class="bullet-row"><span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a discussion point"><button type="button" class="bullet-rm" onclick="removeBullet(this,\'' + detailId + '\')" aria-label="Remove point">\u00d7</button></div>' +
+    '<button type="button" class="add-bullet" onclick="addBullet(\'' + detailId + '\')" aria-label="Add point">+ Add Point</button>';
+  document.getElementById(prefix + '-details').appendChild(block);
 }
 
 function addBullet(blockId) {
-  var bullets = document.getElementById(blockId).querySelector('.topic-bullets');
-  var addBtn = bullets.querySelector('.add-bullet');
+  var block = document.getElementById(blockId);
+  var addBtn = block.querySelector('.add-bullet');
   var row = document.createElement('div');
   row.className = 'bullet-row';
-  row.innerHTML = '<span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a point"><button type="button" class="bullet-rm" onclick="removeBullet(this,\'' + blockId + '\')" aria-label="Remove bullet point">\u00d7</button>';
-  bullets.insertBefore(row, addBtn);
+  row.innerHTML = '<span class="bullet-dot">\u2022</span><input type="text" placeholder="Add a discussion point"><button type="button" class="bullet-rm" onclick="removeBullet(this,\'' + blockId + '\')" aria-label="Remove point">\u00d7</button>';
+  block.insertBefore(row, addBtn);
+  row.querySelector('input').focus();
 }
 
 function removeBullet(btn, blockId) {
@@ -186,13 +189,9 @@ function addCustomTopic(prefix) {
   var input = document.getElementById(prefix + '-new-topic');
   var name = input.value.trim();
   if (!name) return;
-  var container = document.getElementById(prefix + '-topics');
-  addTopicBlock(container, prefix, name);
-  var blocks = container.querySelectorAll('.topic-block');
-  var last = blocks[blocks.length - 1];
-  last.querySelector('input[type="checkbox"]').checked = true;
-  last.classList.add('active');
+  addTopicChip(prefix, name, true);
   input.value = '';
+  input.focus();
 }
 
 function switchTab(id) {
@@ -211,20 +210,8 @@ function formatDate(dateStr) {
 
 function generateAgenda(prefix) {
   var container = document.getElementById(prefix + '-topics');
-  var blocks = container.querySelectorAll('.topic-block');
-  var sections = [];
-  blocks.forEach(function(block) {
-    var cb = block.querySelector('input[type="checkbox"]');
-    if (!cb.checked) return;
-    var name = block.querySelector('.topic-header span').textContent;
-    var bullets = [];
-    block.querySelectorAll('.bullet-row input').forEach(function(inp) {
-      var v = inp.value.trim();
-      if (v) bullets.push(v);
-    });
-    sections.push({name: name, bullets: bullets});
-  });
-  if (sections.length === 0) { alert('Please select at least one topic.'); return; }
+  var selected = container.querySelectorAll('.chip.selected');
+  if (selected.length === 0) { alert('Please select at least one topic.'); return; }
 
   var date = formatDate(document.getElementById(prefix + '-date').value);
   var timeEl = document.getElementById(prefix + '-time');
@@ -233,21 +220,27 @@ function generateAgenda(prefix) {
   if (prefix === 'o' && !empName) { alert('Please enter the employee name.'); return; }
 
   var title = (prefix === 't') ? meetingTypeNames[meetingType] : 'One-on-One';
+  var line = '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500';
 
   var agenda = title.toUpperCase() + '\n';
   agenda += 'Date: ' + date;
   if (time) agenda += '  |  Time: ' + time;
   if (empName) agenda += '  |  Employee: ' + empName;
-  agenda += '\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n';
+  agenda += '\n' + line + '\n\n';
 
-  for (var i = 0; i < sections.length; i++) {
-    agenda += (i + 1) + '. ' + sections[i].name + '\n';
-    for (var j = 0; j < sections[i].bullets.length; j++) {
-      agenda += '   \u2022 ' + sections[i].bullets[j] + '\n';
+  selected.forEach(function(chip, i) {
+    agenda += (i + 1) + '. ' + chip.textContent + '\n';
+    var block = document.getElementById(chip.dataset.detailId);
+    if (block) {
+      block.querySelectorAll('.bullet-row input').forEach(function(inp) {
+        var v = inp.value.trim();
+        if (v) agenda += '   \u2022 ' + v + '\n';
+      });
     }
     agenda += '\n';
-  }
-  agenda += '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500';
+  });
+
+  agenda += line;
 
   if (prefix === 'o') {
     agenda += '\n\n\n___________________________\nEmployee Signature / Date\n\n___________________________\nSupervisor Signature / Date';
